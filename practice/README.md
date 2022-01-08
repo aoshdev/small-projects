@@ -1,2 +1,2 @@
-# Practice
-Practice projects here
+# Scratch code
+Practice projects here.
