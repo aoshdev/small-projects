@@ -9,5 +9,5 @@
 **Guides:** [Google](https://www.google.com)\
 **Examples:** [Google](https://www.google.com)\
 **Estimated time required:** \
-**Cost:** *e.g. APIs, domains etc.*\
+**Cost:** *e.g. APIs, domains etc.*
 
