@@ -18,9 +18,15 @@ generic_pictures_path = Path.home() / "Pictures"
 today = datetime.date.today().strftime("%Y_%m_%d")
 output_path = f"{generic_pictures_path}\{inputs['subreddit_name']}"
 
+# intro message
+print(f"Analysing {inputs['subreddit_name']}.")
+
 # create directory if it doesn't already exist
 if not os.path.isdir(output_path):
+    print(f'Creating output directory here: {output_path}')
     os.mkdir(output_path)
+else:
+    print("Output path already exists.")
 
 # load reddit keys
 load_dotenv()
@@ -40,6 +46,7 @@ posts = subreddit.top(
         time_filter=inputs['time_filter'], 
         limit=inputs['post_limit'])
 
+# instantiate dictionary
 posts_dict = {
         "title": [], "score": [],"total_comments": [],
         "post_url": [], "datetime_utc": []}
