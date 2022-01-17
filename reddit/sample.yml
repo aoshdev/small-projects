@@ -1,0 +1,5 @@
+download_pics: "y" # y/n
+
+subreddit_name: "shingekinokyojin"
+time_filter: "month" # one of: "all", "day", "hour", "month", "week", or "year"
+post_limit: 100
