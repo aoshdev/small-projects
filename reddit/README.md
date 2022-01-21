@@ -1,4 +1,5 @@
 # Reddit script
+## (cancelled - praw only supports 1000 rows of data at a time...)
 
 What it does:
 * produce dataset for data exploration (one row per post)
