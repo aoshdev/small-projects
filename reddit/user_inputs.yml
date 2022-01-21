@@ -1,0 +1,13 @@
+# reddit config
+subreddit_name: "all"
+time_filter: "year" # one of: "all", "day", "hour", "month", "week", or "year"
+post_limit: 10000
+
+# data analysis
+perform_analysis: "y" # y/n
+output_data: "y"
+
+# pictures
+download_pics: "n" # y/n
+
+

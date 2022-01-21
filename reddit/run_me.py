@@ -9,7 +9,7 @@ import re
 import yaml
 
 # read in yaml file (containing user inputs)
-yml_path = f"{os.path.dirname(__file__)}/sample.yml"
+yml_path = f"{os.path.dirname(__file__)}/user_inputs.yml"
 with open(yml_path) as f:
     inputs = yaml.safe_load(f)
 
@@ -17,6 +17,8 @@ with open(yml_path) as f:
 generic_pictures_path = Path.home() / "Pictures"
 today = datetime.date.today().strftime("%Y_%m_%d")
 output_path = f"{generic_pictures_path}\{inputs['subreddit_name']}"
+
+suitable_formats = ['.jpg', '.gif', '.png'] # limited to suffix with 3 characters for now
 
 # intro message
 print(f"Analysing {inputs['subreddit_name']}.")
@@ -29,6 +31,7 @@ else:
     print("Output path already exists.")
 
 # load reddit keys
+print("Instantiating connection.")
 load_dotenv()
 client_id = os.environ.get('client_id')
 secret = os.environ.get('secret')
@@ -47,6 +50,7 @@ posts = subreddit.top(
         limit=inputs['post_limit'])
 
 # instantiate dictionary
+print("Creating dataset.")
 posts_dict = {
         "title": [], "score": [],"total_comments": [],
         "post_url": [], "datetime_utc": []}
@@ -61,9 +65,10 @@ for post in posts:
     posts_dict["datetime_utc"].append(datetime_utc)
 
 top_posts = pd.DataFrame(posts_dict)
-top_posts.to_csv(f"{output_path}\{inputs['subreddit_name']}.csv", index=False)
 
-print("Saved dataset.")
+if inputs["output_data"] == "y":
+    top_posts.to_csv(f"{output_path}\{inputs['subreddit_name']}.csv", index=False)
+    print("Saved dataset.")
 
 # save pictures
 if inputs["download_pics"] == 'y':
@@ -75,13 +80,17 @@ if inputs["download_pics"] == 'y':
         post_url = posts_dict["post_url"][i]
         post_title = posts_dict["title"][i][:100] # truncate
 
+        pic_format = post_url[-4:] #hardcoded
+
         # # download if it's a picture
-        if post_url.endswith(".jpg"):
+        if any(format in pic_format for format in suitable_formats):
             file_name = re.sub(r"[^a-zA-Z0-9]+", ' ', post_title)
-            file_path = f'{output_path}\{file_name}.jpg'
+            file_path = f'{output_path}\{file_name}.{post_url[-3:]}' #hardcoded 3
             urllib.request.urlretrieve(post_url, file_path)
 
     print("Finished saving pictures.")
-    print(f"Saved here: {output_path}")
+else:
+    print("Not downloading pictures.")
 
+print(f"Outputs saved here: {output_path}")
 print("All done.")

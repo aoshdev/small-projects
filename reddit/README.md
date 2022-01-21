@@ -15,3 +15,9 @@ Setup:
 Other considerations:
 * Dealing with posts with multiple urls
 * Log of what was done and and errors
+
+Learnings:
+* using a basic yml configuration file
+* access reddit's API using praw package
+* os paths
+* some Python style guide (2 tabs for arguments in new row)
